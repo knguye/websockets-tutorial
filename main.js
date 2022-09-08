@@ -1,19 +1,9 @@
 import { createBoard, playMove } from "./connect4.js";
 
-window.addEventListener("DOMContentLoaded", () => {
-    const board = document.querySelector(".board");
-    createBoard(board);
-
-    // Open Websocket connection to handle events
-    const websocket = new WebSocket("ws://localhost:8001");
-    initGame(websocket);
-    sendMoves(board, websocket);
-    receiveMoves(board, websocket);
-});
-
 function initGame(websocket){
     websocket.addEventListener("open", () => {
-        const params = new URLSearchParams(windows.location.search);
+        // Send an init event depending on who's connecting
+        const params = new URLSearchParams(window.location.search);
         let event = { type: "init" };
         if (params.has("join")){
             event["join"] = params.get("join")
@@ -49,16 +39,17 @@ function showMessage(message) {
 function receiveMoves(board, websocket){
     websocket.addEventListener("message", ({data}) => {
         const event = JSON.parse(data);
+        print(event);
         switch (event.type){
             case "init":
                 document.querySelector(".join").href = "?join=" + event.join; // Initialize the URL with the join key
                 break; 
             case "play":
-                playMove(board, event.player, event.column, event.row);
+                playMove(board, event.player, event.column, event.row); // connect4.js
                 break;
             case "win":
                 showMessage(`Player ${event.player} wins!`);
-                websocket.close(1000);
+                websocket.close(1000); // Close the connection
                 break;
             case "error":
                 showMessage(event.message);
@@ -68,3 +59,14 @@ function receiveMoves(board, websocket){
         }
     });
 }
+    window.addEventListener("DOMContentLoaded", () => {
+        const board = document.querySelector(".board");
+        createBoard(board);
+    
+        // Open Websocket connection to handle events
+        const websocket = new WebSocket("ws://localhost:8001");
+        initGame(websocket);
+        sendMoves(board, websocket);
+        receiveMoves(board, websocket);
+    });
+    
