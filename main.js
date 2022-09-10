@@ -71,7 +71,15 @@ function receiveMoves(board, websocket){
 }
 
 function getWebSocketServer(){
-    
+    if (window.location.host === "knguye.github.io"){
+        return "wss://websockets-tutorial-kn.herokuapp.com/"
+    }
+    else if (window.location.host === "localhost:8000"){
+        return "ws://localhost:8001/";
+    }
+    else {
+        throw new Error(`Unsupported host: ${window.location.host}`)
+    }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -79,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
     createBoard(board);
 
     // Open Websocket connection to handle events
-    const websocket = new WebSocket("ws://localhost:8001");
+    const websocket = new WebSocket(getWebSocketServer());
     initGame(websocket);
     receiveMoves(board, websocket);
     sendMoves(board, websocket);
