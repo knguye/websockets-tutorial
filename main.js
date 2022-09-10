@@ -70,6 +70,10 @@ function receiveMoves(board, websocket){
     });
 }
 
+function getWebSocketServer(){
+    
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     const board = document.querySelector(".board");
     createBoard(board);

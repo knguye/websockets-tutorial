@@ -147,17 +147,15 @@ async def handler(websocket):
         await start(websocket) # First player starts game
 
 async def main():
-    async with websockets.serve(handler, "", 8001):
-        await asyncio.Future()
     # Set the stop condition when receiving SIGTERM
-    #loop = asyncio.get_running_loop()
-    #stop = loop.create_future()
-    #loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
+    loop = asyncio.get_running_loop()
+    stop = loop.create_future()
+    loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
 
-    #port = int(os.environ.get("PORT", "8001")) # For Heroku to listen in
+    port = int(os.environ.get("localhost", "8001")) # For Heroku to listen in
 
-    #async with websockets.serve(handler, "", port): # Starts handler coroutine with host and port as websocket connection
-        #await stop # Waits for stop to set the result to stop the program
+    async with websockets.serve(handler, "", port): # Starts handler coroutine with host and port as websocket connection
+        await stop # Waits for stop to set the result to stop the program
 
 
 if __name__ == "__main__":
