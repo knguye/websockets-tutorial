@@ -1,3 +1,3 @@
 Procfile.windows
 ------------------------------------------
-web: py app.py
+web: python app.py
