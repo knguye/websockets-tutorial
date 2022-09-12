@@ -58,6 +58,7 @@ function receiveMoves(board, websocket){
                 playMove(board, event.player, event.column, event.row); // connect4.js
                 break;
             case "win":
+                console.log("Winner found");
                 showMessage(`Player ${event.player} wins!`);
                 websocket.close(1000); // Close the connection
                 break;
