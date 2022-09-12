@@ -48,7 +48,7 @@ function showMessage(message) {
 function receiveMoves(board, websocket){
     websocket.addEventListener("message", ({data}) => {
         const event = JSON.parse(data);
-        //print(event);
+        console.log(event)
         switch (event.type){
             case "init":
                 document.querySelector(".join").href = "?join=" + event.join; // Initialize the URL with the join key

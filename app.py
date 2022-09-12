@@ -123,7 +123,7 @@ async def play(websocket, game, player, connected):
         }
         websockets.broadcast(connected, json.dumps(event))
 
-        if game.winner != None:
+        if game.winner is not None:
             event = {
                 "type": "win",
                 "player": game.player
