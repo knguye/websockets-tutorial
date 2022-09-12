@@ -53,12 +53,12 @@ function receiveMoves(board, websocket){
             case "init":
                 document.querySelector(".join").href = "?join=" + event.join; // Initialize the URL with the join key
                 document.querySelector(".watch").href = "?watch=" + event.watch;
+                document.querySelector(".new").href = window.location.href;
                 break; 
             case "play":
                 playMove(board, event.player, event.column, event.row); // connect4.js
                 break;
             case "win":
-                console.log("Winner found");
                 showMessage(`Player ${event.player} wins!`);
                 websocket.close(1000); // Close the connection
                 break;
