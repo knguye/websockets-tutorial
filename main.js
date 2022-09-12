@@ -55,12 +55,12 @@ function receiveMoves(board, websocket){
                 document.querySelector(".watch").href = "?watch=" + event.watch;
                 document.querySelector(".new").href = window.location.href;
                 break; 
-            case "play":
-                playMove(board, event.player, event.column, event.row); // connect4.js
-                break;
             case "win":
                 showMessage(`Player ${event.player} wins!`);
-                websocket.close(1000); // Close the connection
+                websocket.close(100); // Close the connection
+                break;
+            case "play":
+                playMove(board, event.player, event.column, event.row); // connect4.js
                 break;
             case "error":
                 showMessage(event.message);
