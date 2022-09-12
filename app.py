@@ -124,13 +124,9 @@ async def play(websocket, game, player, connected):
         websockets.broadcast(connected, json.dumps(event))
 
         if game.winner != None:
-            #event = {
-            #    "type": "win",
-            #    "player": game.player
-            #}
             event = {
-                "type": "error",
-                "message": "Winner found"
+                "type": "win",
+                "player": game.player
             }
             websockets.broadcast(connected, json.dumps(event))
 
